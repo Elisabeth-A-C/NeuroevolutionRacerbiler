@@ -1,10 +1,10 @@
-//populationSize: Hvor mange "controllere" der genereres, controller = bil & hjerne & sensorer. //<>//
-int populationSize  = 100;     
+//populationSize: Hvor mange "controllere", der genereres. Controller = bil, hjerne & sensorer. //<>//
+int populationSize = 100;     
 
-//CarSystem: Indholder en population af "controllere" 
-CarSystem carSystem       = new CarSystem(populationSize);
+//CarSystem: Indholder en population af "controllere".
+CarSystem carSystem = new CarSystem(populationSize);
 
-//trackImage: RacerBanen , Vejen = sort, Udenfor = hvid, Målstreg = 100%grøn.
+//trackImage: RacerBanen. Vejen = sort; udenfor banen = hvid; målstreg = 100% grøn.
 PImage trackImage;
 
 void setup() {
@@ -20,7 +20,7 @@ void draw() {
 
   carSystem.updateAndDisplay();
 
-  //Frastortering af dårlige biler, for hver gang der går 200 frame - f.eks. dem der kører uden for banen.
+  //Frastortering af dårlige biler, for hver gang der går 100 frames. Dårlige biler = de biler, der er udenfor banen.
   if (frameCount%100 == 0) {
     println("FJERN DEM DER KØRER UDENFOR BANEN frameCount: " + frameCount);
     for (int i = carSystem.CarControllerList.size()-1; i >= 0; i--) {
