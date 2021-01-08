@@ -1,12 +1,12 @@
 class SensorSystem {
   //SensorSystem - alle bilens sensorer - ogå dem der ikke bruges af "hjernen"
-  
+
   //wall detectors
   float sensorMag = 50;
   float sensorAngle = PI*2/8;
-  
+
   PVector anchorPos           = new PVector();
-  
+
   PVector sensorVectorFront   = new PVector(0, sensorMag);
   PVector sensorVectorLeft    = new PVector(0, sensorMag);
   PVector sensorVectorRight   = new PVector(0, sensorMag);
@@ -27,6 +27,8 @@ class SensorSystem {
   boolean lastGreenDetection;
   int     lastTimeInFrames      = 0;
   int     lapTimeInFrames       = 10000;
+
+  int     amountOfLaps          = 0;
 
   void displaySensors() {
     strokeWeight(0.5);
@@ -70,6 +72,7 @@ class SensorSystem {
     if (red(color_car_position)==0 && blue(color_car_position)==0 && green(color_car_position)!=0) {//den grønne målstreg er detekteret
       currentGreenDetection = true;
     }
+
     if (lastGreenDetection && !currentGreenDetection) {  //sidst grønt - nu ikke -vi har passeret målstregen 
       lapTimeInFrames = frameCount - lastTimeInFrames; //LAPTIME BEREGNES - frames nu - frames sidst
       lastTimeInFrames = frameCount;
@@ -81,10 +84,24 @@ class SensorSystem {
     float deltaHeading   =  lastRotationAngle - centerToCarVector.heading();
     clockWiseRotationFrameCounter  =  deltaHeading>0 ? clockWiseRotationFrameCounter + 1 : clockWiseRotationFrameCounter -1;
     lastRotationAngle = currentRotationAngle;
-    
+
     updateSensorVectors(vel);
-    
-    anchorPos.set(pos.x,pos.y);
+
+    anchorPos.set(pos.x, pos.y);
+    //Calculates the time for to drive a lap.
+    if (red(color_car_position)==0 && blue(color_car_position)==0 && green(color_car_position)!=0) {
+      println("Laptime for racecar " + lastTimeInFrames/60 + " sekunder.");
+    }
+    //Calculates the amount of laps passed by a racecar.
+    if (red(color_car_position)==0 && blue(color_car_position)==0 && green(color_car_position)!=0) {
+      lastTimeInFrames = 0;
+      amountOfLaps = amountOfLaps + 1; 
+      println("Racecar laps: " + amountOfLaps);
+    }
+    //Calculates the amount of cars driven over the finishline.
+    if (lastGreenDetection == true) {
+      println("Amount of cars over the finishline: " + amountOfLaps);
+    }
   }
 
   void updateSensorVectors(PVector vel) {
