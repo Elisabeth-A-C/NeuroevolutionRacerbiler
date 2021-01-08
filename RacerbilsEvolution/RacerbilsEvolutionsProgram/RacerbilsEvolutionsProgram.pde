@@ -1,4 +1,4 @@
-//populationSize: Hvor mange "controllere" der genereres, controller = bil & hjerne & sensorer //<>//
+//populationSize: Hvor mange "controllere" der genereres, controller = bil & hjerne & sensorer. //<>//
 int populationSize  = 100;     
 
 //CarSystem: Indholder en population af "controllere" 
