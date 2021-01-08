@@ -22,10 +22,9 @@ void draw() {
 
   //Frastortering af dårlige biler, for hver gang der går 100 frames. Dårlige biler = de biler, der er udenfor banen.
   if (frameCount%100 == 0) {
-    println("FJERN DEM DER KØRER UDENFOR BANEN frameCount: " + frameCount);
     for (int i = carSystem.CarControllerList.size()-1; i >= 0; i--) {
       CarController c = carSystem.CarControllerList.get(i);
-      if (c.sensorSystem.fitness() == 0) {
+      if (c.fitness() == 0) {
         carSystem.CarControllerList.remove(c);
       }
     }
@@ -33,5 +32,6 @@ void draw() {
       CarController controller = new CarController();
       carSystem.CarControllerList.add(controller);
     }
+    carSystem.crossover();
   }
 }

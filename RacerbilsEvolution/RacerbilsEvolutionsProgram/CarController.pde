@@ -27,4 +27,15 @@ class CarController {
     bil.displayCar();
     sensorSystem.displaySensors();
   }
+
+  //Calculate fitness; the longer the sensors is outside the black track, the lower the fitness.
+  float fitness() {
+    //This function doesn't consider if a car just turns clockwise but doesn't drive around the track - it will still give those cars a higher fitness. 
+    //We will solve this issue later by making another function that consider how fast the car drive around the track.
+    if (sensorSystem.whiteSensorFrameCount > 0) {
+      return(0);
+    } else {
+      return(sensorSystem.clockWiseRotationFrameCounter + 1);
+    }
+  }
 }
