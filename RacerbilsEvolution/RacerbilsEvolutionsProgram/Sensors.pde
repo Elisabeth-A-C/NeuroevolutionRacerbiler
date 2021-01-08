@@ -1,12 +1,12 @@
 class SensorSystem {
   //SensorSystem - alle bilens sensorer - ogå dem der ikke bruges af "hjernen"
-  
+
   //wall detectors
   float sensorMag = 50;
   float sensorAngle = PI*2/8;
-  
+
   PVector anchorPos           = new PVector();
-  
+
   PVector sensorVectorFront   = new PVector(0, sensorMag);
   PVector sensorVectorLeft    = new PVector(0, sensorMag);
   PVector sensorVectorRight   = new PVector(0, sensorMag);
@@ -36,18 +36,18 @@ class SensorSystem {
     }
     if (leftSensorSignal) { 
       fill(255, 0, 0);
-      ellipse( anchorPos.x+sensorVectorLeft.x, anchorPos.y+sensorVectorLeft.y, 8, 8);
+      ellipse(anchorPos.x+sensorVectorLeft.x, anchorPos.y+sensorVectorLeft.y, 8, 8);
     }
     if (rightSensorSignal) { 
       fill(255, 0, 0);
-      ellipse( anchorPos.x+sensorVectorRight.x, anchorPos.y+sensorVectorRight.y, 8, 8);
+      ellipse(anchorPos.x+sensorVectorRight.x, anchorPos.y+sensorVectorRight.y, 8, 8);
     }
     line(anchorPos.x, anchorPos.y, anchorPos.x+sensorVectorFront.x, anchorPos.y+sensorVectorFront.y);
     line(anchorPos.x, anchorPos.y, anchorPos.x+sensorVectorLeft.x, anchorPos.y+sensorVectorLeft.y);
     line(anchorPos.x, anchorPos.y, anchorPos.x+sensorVectorRight.x, anchorPos.y+sensorVectorRight.y);
 
     strokeWeight(2);
-    if (whiteSensorFrameCount>0) {
+    if (whiteSensorFrameCount > 0) {
       fill(whiteSensorFrameCount*10, 0, 0);
     } else {
       fill(0, clockWiseRotationFrameCounter, 0);
@@ -81,10 +81,10 @@ class SensorSystem {
     float deltaHeading   =  lastRotationAngle - centerToCarVector.heading();
     clockWiseRotationFrameCounter  =  deltaHeading>0 ? clockWiseRotationFrameCounter + 1 : clockWiseRotationFrameCounter -1;
     lastRotationAngle = currentRotationAngle;
-    
+
     updateSensorVectors(vel);
-    
-    anchorPos.set(pos.x,pos.y);
+
+    anchorPos.set(pos.x, pos.y);
   }
 
   void updateSensorVectors(PVector vel) {
@@ -97,5 +97,16 @@ class SensorSystem {
     sensorVectorLeft.rotate(-sensorAngle);
     sensorVectorRight.set(sensorVectorFront);
     sensorVectorRight.rotate(sensorAngle);
+  }
+
+  //Calculate fitness; the longer the sensors is outside the black track, the lower the fitness.
+  float fitness() {
+    //This function doesn't consider if a car just turns clockwise but doesn't drive around the track - it will still give those cars a higher fitness. 
+    //We will solve this issue later by making another function that consider how fast the car drive around the track.
+    if (whiteSensorFrameCount > 0) {
+      return(0);
+    } else {
+      return(clockWiseRotationFrameCounter+1);
+    }
   }
 }
