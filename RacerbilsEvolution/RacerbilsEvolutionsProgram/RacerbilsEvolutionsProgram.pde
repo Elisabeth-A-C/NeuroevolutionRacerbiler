@@ -20,8 +20,8 @@ void draw() {
 
   carSystem.updateAndDisplay();
 
-  //Frastortering af dårlige biler, for hver gang der går 100 frames. Dårlige biler = de biler, der er udenfor banen.
-  if (frameCount%100 == 0) {
+  //Frastortering af dårlige biler, for hver gang der går 50 frames. Dårlige biler = de biler, der er udenfor banen.
+  if (frameCount%50 == 0) {
     for (int i = carSystem.CarControllerList.size()-1; i >= 0; i--) {
       CarController c = carSystem.CarControllerList.get(i);
       if (c.fitness() == 0) {

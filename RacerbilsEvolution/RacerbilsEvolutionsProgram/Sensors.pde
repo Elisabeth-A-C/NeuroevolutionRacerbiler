@@ -18,8 +18,6 @@ class SensorSystem {
   //"Outside the track" detection.
   int whiteSensorFrameCount = 0; //udenfor banen
 
-
-
   //Clockwise rotation detection.
   PVector centerToCarVector = new PVector();
   float lastRotationAngle = -1;
@@ -71,7 +69,7 @@ class SensorSystem {
       whiteSensorFrameCount = whiteSensorFrameCount + 1;
     }
     //Laptime calculation
-    boolean currentGreenDetection =false;
+    boolean currentGreenDetection = false;
     if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) != 0) { //Den grønne målstreg er detekteret.
       currentGreenDetection = true;
     }
@@ -85,7 +83,7 @@ class SensorSystem {
     centerToCarVector.set((height/2) - pos.x, (width/2) - pos.y);    
     float currentRotationAngle = centerToCarVector.heading();
     float deltaHeading = lastRotationAngle - centerToCarVector.heading();
-    clockWiseRotationFrameCounter = deltaHeading>0 ? clockWiseRotationFrameCounter + 1 : clockWiseRotationFrameCounter -1;
+    clockWiseRotationFrameCounter = deltaHeading > 0 ? clockWiseRotationFrameCounter + 1 : clockWiseRotationFrameCounter -1;
     lastRotationAngle = currentRotationAngle;
 
     updateSensorVectors(vel);
