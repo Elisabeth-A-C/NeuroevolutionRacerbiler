@@ -29,6 +29,7 @@ class SensorSystem {
   int lapTimeInFrames = 10000;
 
   int amountOfLaps = 0;
+  int carCrash = 0;
 
   void displaySensors() {
     strokeWeight(0.5);
@@ -102,6 +103,11 @@ class SensorSystem {
     //Calculates the amount of cars driven over the finishline.
     if (lastGreenDetection == true) {
       println("Amount of cars over the finishline: " + amountOfLaps);
+    }
+    //Calculates the amount of cars crashed.
+    if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) == 0) {
+      carCrash = carCrash+1;
+      println("Amount of cars chrased " + carCrash);
     }
   }
 
