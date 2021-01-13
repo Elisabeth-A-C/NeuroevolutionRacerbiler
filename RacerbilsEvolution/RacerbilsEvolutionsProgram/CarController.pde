@@ -30,12 +30,19 @@ class CarController {
 
   //Calculate fitness; the longer the sensors is outside the black track, the lower the fitness.
   float fitness() {
-    //This function doesn't consider if a car just turns clockwise but doesn't drive around the track - it will still give those cars a higher fitness. 
+    float f = 0;
+    //This part of the function doesn't consider if a car just turns clockwise but doesn't drive around the track - it will still give those cars a higher fitness. 
     //We will solve this issue later by making another function that consider how fast the car drive around the track.
     if (sensorSystem.whiteSensorFrameCount > 0) {
-      return(0);
-    } else {
-      return(sensorSystem.clockWiseRotationFrameCounter + 1);
+      f = 0;
+    } else { 
+      f = sensorSystem.clockWiseRotationFrameCounter + 1;
     }
+    //This part of the fitness function will consider how fast the cars drive around the track; the faster the car drives, the higher fitness. 
+    //This part of the fitness function is weighted much higher than the rest.
+    if (sensorSystem.amountOfLaps > 0) {     
+      f = 1000000/sensorSystem.lapTimeInFrames;
+    }
+    return(f);
   }
 }
