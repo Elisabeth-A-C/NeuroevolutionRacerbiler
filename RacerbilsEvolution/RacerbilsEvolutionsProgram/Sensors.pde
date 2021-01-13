@@ -95,7 +95,7 @@ class SensorSystem {
       println("Laptime for racecar " + lastTimeInFrames/60 + " sekunder.");
     }
     //Calculates the amount of laps passed by a racecar.
-    if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) != 0) {
+    if (red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
       lastTimeInFrames = 0;
       amountOfLaps = amountOfLaps + 1; 
       println("Racecar laps: " + amountOfLaps);
@@ -105,10 +105,10 @@ class SensorSystem {
       println("Amount of cars over the finishline: " + amountOfLaps);
     }
     //Calculates the amount of cars crashed.
-    if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) == 0) {
-      carCrash = carCrash+1;
-      println("Amount of cars chrased " + carCrash);
-    }
+    //if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) == 0) {
+    //  carCrash = carCrash+1;
+    //  println("Amount of cars chrased " + carCrash);
+    //}
   }
 
   void updateSensorVectors(PVector vel) {
