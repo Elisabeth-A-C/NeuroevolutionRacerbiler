@@ -91,11 +91,11 @@ class SensorSystem {
 
     anchorPos.set(pos.x, pos.y);
     //Calculates the time for to drive a lap.
-    if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) != 0) {
+    if (lastGreenDetection = true && red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
       println("Laptime for racecar " + lastTimeInFrames/60 + " sekunder.");
     }
     //Calculates the amount of laps passed by a racecar.
-    if (red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
+    if (lastGreenDetection = true && red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
       lastTimeInFrames = 0;
       amountOfLaps = amountOfLaps + 1; 
       println("Racecar laps: " + amountOfLaps);
