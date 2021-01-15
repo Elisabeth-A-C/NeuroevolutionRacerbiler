@@ -47,6 +47,7 @@ Hastigheden er konstant 5 pixels/frame. Kan kun dreje/rotere enten til venstre e
 **lapTimeInFrames:** Antal frames bilen bruger inden den kører over den grønne streg.</br>
 ### NeuralNetwork: Hjernen. 
 Et simpelt netværk 3 input-, 2 mellem-lags- og 1 output-neuroner. </br>
-###Udregning af laps og tid.
+
+##Udregning af laps og tid.
 For at beregne racerbilen der kører runder og tiden. Kigger vi på de 2 forskellige linjer på banen.
 Der er en grøn målstreg og en blå målstreg. Vi kan se at en bil har kørt rundt om banen ved at kigge på at hvis racerbilen er sidst rørt den grønne og den så rør det blå målstreg. Vi tager brug af de 2 målstrege da der opstod et problem med at racer bilerne blev ved med at køre frem og tilbage over den grønne målstreg. Dette betød at tallene ikke virkede ordenligt.
