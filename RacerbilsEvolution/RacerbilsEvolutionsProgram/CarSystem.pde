@@ -62,6 +62,21 @@ class CarSystem {
       child.hjerne.biases[2] = c1.hjerne.biases[2];
     }
   }
+
+  void mutation() {
+    for (int g = populationSize/5; g < populationSize; g++) {
+      float r = random(1);
+      //We want a 5% chance of mutation.
+      if (r < 0.05) {
+        int rw = floor(random(8));
+        CarController child = CarControllerList.get(g);
+        child.hjerne.weights[rw] = random(-child.varians, child.varians);
+
+        int rb = floor(random(3));
+        child.hjerne.biases[rb] = random(-child.varians, child.varians);
+      }
+    }
+  }
 }
 
 //Create sorting algorithm found on the internet: https://www.javacodeexamples.com/java-sort-arraylist-using-comparator-example/449

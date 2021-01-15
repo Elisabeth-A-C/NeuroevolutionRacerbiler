@@ -24,7 +24,7 @@ void draw() {
   if (frameCount%50 == 0) {
     for (int i = carSystem.CarControllerList.size()-1; i >= 0; i--) {
       CarController c = carSystem.CarControllerList.get(i);
-      if (c.fitness() == 0) {
+      if (c.sensorSystem.whiteSensorFrameCount > 0) {
         carSystem.CarControllerList.remove(c);
       }
     }
@@ -33,5 +33,6 @@ void draw() {
       carSystem.CarControllerList.add(controller);
     }
     carSystem.crossover();
+    carSystem.mutation();
   }
 }
