@@ -38,11 +38,12 @@ class CarController {
     } else { 
       f = sensorSystem.clockWiseRotationFrameCounter + 1;
     }
+
     //This part of the fitness function will consider how fast the cars drive around the track; the faster the car drives, the higher fitness. 
     //This part of the fitness function is weighted much higher than the rest.
     if (sensorSystem.lapTimeInFrames > 50) {     
       f = 1000000/sensorSystem.lapTimeInFrames;
-    }
+    }   
     return(f);
   }
 }

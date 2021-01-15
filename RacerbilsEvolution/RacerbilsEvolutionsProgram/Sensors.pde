@@ -14,7 +14,7 @@ class SensorSystem {
   boolean frontSensorSignal = false;
   boolean leftSensorSignal = false;
   boolean rightSensorSignal = false;
-  
+
   //"Outside the track" detection.
   int whiteSensorFrameCount = 0; //udenfor banen
 
@@ -30,6 +30,10 @@ class SensorSystem {
 
   int amountOfLaps = 0;
   int carCrash = 0;
+
+  //Variables to calculate speed (speed = range over the last x steps).
+  PVector speedStart = new PVector(60, 232); //The car always starts in this position (see file: Car).
+  float speed = 0;
 
   void displaySensors() {
     strokeWeight(0.5);
@@ -63,7 +67,7 @@ class SensorSystem {
     frontSensorSignal = get(int(pos.x + sensorVectorFront.x), int(pos.y + sensorVectorFront.y)) == -1?true:false;
     leftSensorSignal = get(int(pos.x + sensorVectorLeft.x), int(pos.y + sensorVectorLeft.y)) == -1?true:false;
     rightSensorSignal = get(int(pos.x + sensorVectorRight.x), int(pos.y + sensorVectorRight.y)) == -1?true:false;  
-  
+
     //"Outside the track" detector.
     color color_car_position = get(int(pos.x), int(pos.y));
     if (color_car_position == -1) {
@@ -109,6 +113,14 @@ class SensorSystem {
     //  carCrash = carCrash+1;
     //  println("Amount of cars chrased " + carCrash);
     //}
+
+    //Calculation of speed (we use Pythagoras to calculate this). Speed is calculated every 50 framecounts.
+    if (frameCount%50 == 0) {
+      speed = sqrt(pow(pos.x - speedStart.x, 2) + pow(pos.y - speedStart.y, 2));
+      //Set "speedStart" to new last position.
+      speedStart.x = pos.x;
+      speedStart.y = pos.y;
+    }
   }
 
   void updateSensorVectors(PVector vel) {
