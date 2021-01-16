@@ -1,4 +1,4 @@
-import java.util.ArrayList; //<>// //<>// //<>// //<>//
+import java.util.ArrayList; //<>//
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -83,9 +83,9 @@ class CarSystem {
 class CarControllerComparator implements Comparator<CarController> {
   public int compare(CarController car1, CarController car2) {
     if (car1.fitness() > car2.fitness() ) {
-      return 1;
-    } else if ( car1.fitness() < car2.fitness()) {
       return -1;
+    } else if ( car1.fitness() < car2.fitness()) {
+      return 1;
     } else {
       return 0;
     }

@@ -32,7 +32,7 @@ class SensorSystem {
   int lapTimeInFrames = 10000;
 
   //Variables to calculate speed (speed = range over the last x steps).
-  PVector speedStart = new PVector(60, 232); //The car always starts in this position (see file: Car).
+  PVector speedStart = new PVector(190, 332); //The car always starts in this position (see file: Car).
   float speed = 0;
 
   void displaySensors() {
@@ -73,15 +73,17 @@ class SensorSystem {
     if (color_car_position == -1) {
       whiteSensorFrameCount = whiteSensorFrameCount + 1;
     }
+
     //Laptime calculation
     boolean currentGreenDetection = false;
-    if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) != 0) { //Den grønne målstreg er detekteret.
+    if (red(color_car_position) < 100 && blue(color_car_position) < 100 && green(color_car_position) > 200) { //Den grønne målstreg er detekteret.
       currentGreenDetection = true;
     }
 
     if (lastGreenDetection && !currentGreenDetection) {  //Sidst grønt, nu ikke = vi har passeret målstregen.
       lapTimeInFrames = frameCount - lastTimeInFrames; //Laptime beregnes: frames nu - frames sidst.
       lastTimeInFrames = frameCount;
+      amountOfLaps = amountOfLaps + 1;
     }   
     lastGreenDetection = currentGreenDetection; //Husker, om der var grønt sidst.
     //Count clockWiseRotationFrameCounter.
@@ -91,31 +93,32 @@ class SensorSystem {
     clockWiseRotationFrameCounter = deltaHeading > 0 ? clockWiseRotationFrameCounter + 1 : clockWiseRotationFrameCounter -1;
     lastRotationAngle = currentRotationAngle;
 
+    //To avoid that the clockWiseRotationFrameCounter will overrule lapTimeInFrames in the fitness-function.
+    if (clockWiseRotationFrameCounter > 1000 ) {
+      clockWiseRotationFrameCounter = clockWiseRotationFrameCounter - 100;
+    }
+
     updateSensorVectors(vel);
 
     anchorPos.set(pos.x, pos.y);
 
+    /*
     //Calculates the time for to drive a lap.
-    if (lastGreenDetection == true && red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
-      println("Laptime for racecar " + lastTimeInFrames/60 + " sekunder");
-    }
-    //Calculates the amount of laps passed by a racecar.
-    if (lastGreenDetection == true && red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
-      lastTimeInFrames = 0;
-      amountOfLaps = amountOfLaps + 1; 
-      println("Racecar laps: " + amountOfLaps);
-    }
-
-    //Calculates the amount of cars driven over the finishline.
-    if (lastGreenDetection == true) {
-      println("Amount of cars over the finishline: " + amountOfLaps);
-    }
-
-    //Calculates the amount of cars crashed.
-    //if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) == 0) {
-    //  carCrash = carCrash+1;
-    //  println("Amount of cars chrased " + carCrash);
-    //}
+     if (lastGreenDetection == true && red(color_car_position) < 100 && blue(color_car_position) > 200 && green(color_car_position) < 100) {
+     //println("Laptime for racecar " + lastTimeInFrames/60 + " sekunder");
+     }
+     //Calculates the amount of laps passed by a racecar.
+     if (lastGreenDetection == true && red(color_car_position) < 100 && blue(color_car_position) > 200 && green(color_car_position) < 100) {
+     lastTimeInFrames = 0;
+     amountOfLaps = amountOfLaps + 1; 
+     //println("Racecar laps: " + amountOfLaps);
+     }
+     
+     //Calculates the amount of cars driven over the finishline.
+     if (lastGreenDetection == true) {
+     //println("Amount of cars over the finishline: " + amountOfLaps);
+     }
+     */
 
     //Calculation of speed (we use Pythagoras to calculate this). Speed is calculated every 50 framecounts.
     if (frameCount%50 == 0) {
