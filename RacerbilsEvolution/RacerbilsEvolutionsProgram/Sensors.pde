@@ -5,6 +5,9 @@ class SensorSystem {
   float sensorMag = 50;
   float sensorAngle = PI*2/8;
 
+  int amountOfLaps = 0;
+  int carCrash = 0;
+
   PVector anchorPos = new PVector();
 
   PVector sensorVectorFront = new PVector(0, sensorMag);
@@ -27,9 +30,6 @@ class SensorSystem {
   boolean lastGreenDetection;
   int lastTimeInFrames = 0;
   int lapTimeInFrames = 10000;
-
-  int amountOfLaps = 0;
-  int carCrash = 0;
 
   //Variables to calculate speed (speed = range over the last x steps).
   PVector speedStart = new PVector(60, 232); //The car always starts in this position (see file: Car).
@@ -94,20 +94,23 @@ class SensorSystem {
     updateSensorVectors(vel);
 
     anchorPos.set(pos.x, pos.y);
+
     //Calculates the time for to drive a lap.
-    if (lastGreenDetection = true && red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
-      println("Laptime for racecar " + lastTimeInFrames/60 + " sekunder.");
+    if (lastGreenDetection == true && red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
+      println("Laptime for racecar " + lastTimeInFrames/60 + " sekunder");
     }
     //Calculates the amount of laps passed by a racecar.
-    if (lastGreenDetection = true && red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
+    if (lastGreenDetection == true && red(color_car_position) == 0 && blue(color_car_position) != 0 && green(color_car_position) == 0) {
       lastTimeInFrames = 0;
       amountOfLaps = amountOfLaps + 1; 
       println("Racecar laps: " + amountOfLaps);
     }
+
     //Calculates the amount of cars driven over the finishline.
     if (lastGreenDetection == true) {
       println("Amount of cars over the finishline: " + amountOfLaps);
     }
+
     //Calculates the amount of cars crashed.
     //if (red(color_car_position) == 0 && blue(color_car_position) == 0 && green(color_car_position) == 0) {
     //  carCrash = carCrash+1;
