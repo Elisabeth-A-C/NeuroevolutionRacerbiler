@@ -61,7 +61,7 @@ I RacerbilsEvolutionsProgram-filen ses det, at vi frasorterer de dårligste bile
 De biler, der er på banen, og som ikke kører rundt om sig selv, bliver opdateret via. fitness-funktionen. Disse biler slettes altså ikke men bliver blot "klogere" via. fitness-funktionen (og evt. ændret via. mutation-funktionen). At de ikke slettes sparer tid, og får programmet til at køre hurtigere, da de biler, der erstatter de slettede biler, ikke nødvendigvis er lige så gode som de biler, der allerede er på banen.
 
 ## Fitness funktion
-I fitness-funktionen definerer 
+I fitness-funktionen bestemmer vi først fitness ud fra, hvor "grønne" bilerne er, altså hvor meget de kører mod uret. Dermed får de biler, som kører den rigtige vej rundt i banen, den højeste fitness. Når bilerne har kørt minimum 1 omgang, tildeles højst fitness til de biler, som kører hurtigst (ud fra funktionen "lapTimeInFrames"), hvilket vægtes meget højere end hvor grønne, bilerne er. Dermed sikrer vi, at bilerne ikke bare bliver grønne, fordi de kører i ring om sig selv, og vi giver de biler, som kører hurtigst, højest fitness. 
 
 ## Crossover-funktion
 I crossover-funktionen udnyttes den matematiske funktion x^4. Bilerne sorteres ud fra fitness via. en sorteringsfunktion, så bilerne sorteret lavest har højest fitness. Derefter vælges et random tal mellem 0 og 1. På grund af den matematiske funktion x^4, så er der størst sandsynlighed for, at et lavt tal bliver valgt og dermed en høj fitness.
