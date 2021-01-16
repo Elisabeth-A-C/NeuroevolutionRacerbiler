@@ -55,3 +55,16 @@ Et simpelt netværk: 3 input-, 2 mellem-lags- og 1 output-neuroner.</br>
 "amountOfLaps" og "lapTimeInFrames" bruges for at beregne antal af runder, racerbilerne kører, og hvor lang tid runderne tager i frames. For at beregne "amountOfLaps", kigger vi på de 2 forskellige målstreger på banen (den grønne og den blå). Der bruges to målstreger med forskellige farver for at sikre, at bilen kører den rigtige vej rundt i banen, og målstregerne er spredt ud over banen, så det sikres, at en bil ikke kan "snyde" sig til en hurtigere tid ved at finde en kortere vej gennem banen.
 Der er en grøn målstreg og en blå målstreg. Vi kan se, at en bil har kørt rundt om banen ved at kigge på, at hvis racerbilen sidst har rørt den grønne, og den så rør den blå målstreg, men ikke rør den grønne og så den grønne igen (da den så vil have kørt over den samme målstreg som før). Vi tager brug af de 2 målstreger, da der opstod et problem med, at racerbilerne blev ved med at køre frem og tilbage over den grønne målstreg. Dette betød, at tallene ikke viste "amountOfLaps" og dermed heller ikke "lapTimeInFrames" ordenligt.</br>
 For at vise "amountOfLaps" og "lapTimeInFrames" for kun den bedste bil (alias bilen med højest fitness) er variablen "bestCar" oprettet og defineret ud fra bilen sorteret til at have den højeste fitness, og derefter er "bestAmountOfLaps" og "bestLapTimeInFrames" defineret ud fra "bestCar", så vi får amountOfLaps og lapTimeInFrames for kun den bil med højest fitness, som vil svare til den hurtigste bil. Det er dermed kun den bedste bil (med højest fitness), som vi viser i selve programmets interface (ikke i konsollen; her vises blot "amountOfLaps" og "lapTimesInFrames" (for alle bilerne)). 
+
+## Fjernelse af biler
+I RacerbilsEvolutionsProgram-filen ses det, at vi frasorterer de dårligste biler hver 50. frames. Her frasorterer vi de biler, som ikke er inde på banen, og som dermed med sensorerne måler "hvidt", og vi frasorterer de biler, der kører rundt om sig selv. For hver bil, vi fjerner, tilføjer vi en ny bil.</br> 
+De biler, der er på banen, og som ikke kører rundt om sig selv, bliver opdateret via. fitness-funktionen. Disse biler slettes altså ikke men bliver blot "klogere" via. fitness-funktionen (og evt. ændret via. mutation-funktionen). At de ikke slettes sparer tid, og får programmet til at køre hurtigere, da de biler, der erstatter de slettede biler, ikke nødvendigvis er lige så gode som de biler, der allerede er på banen.
+
+## Fitness funktion
+I fitness-funktionen definerer 
+
+## Crossover-funktion
+I crossover-funktionen udnyttes den matematiske funktion x^4. Bilerne sorteres ud fra fitness via. en sorteringsfunktion, så bilerne sorteret lavest har højest fitness. Derefter vælges et random tal mellem 0 og 1. På grund af den matematiske funktion x^4, så er der størst sandsynlighed for, at et lavt tal bliver valgt og dermed en høj fitness.
+
+## Mutation funktion
+Vi har valgt, at der er 5% chance for mutation. Hvis der sker en mutation, så vil en random weight og en random bias blive muteret.
